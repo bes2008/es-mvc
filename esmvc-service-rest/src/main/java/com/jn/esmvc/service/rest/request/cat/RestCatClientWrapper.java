@@ -6,7 +6,7 @@ import com.jn.esmvc.service.request.cat.action.CatNodeAttrsResponse;
 import com.jn.esmvc.service.request.cat.action.CatNodesRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
 import com.jn.esmvc.service.rest.RestClientWrapper;
-import com.jn.langx.http.HttpMethod;
+import com.jn.langx.util.net.http.HttpMethod;
 import com.jn.langx.util.Objs;
 import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
