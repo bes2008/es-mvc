@@ -24,8 +24,8 @@
         -->
         <elasticsearch.version>6.7.0</elasticsearch.version>
         <searchguard.version>6.7.0-25.6</searchguard.version>
-        <langx.version>4.0.1</langx.version>
-        <easyjson.version>3.2.7</easyjson.version>
+        <langx.version>4.0.2</langx.version>
+        <easyjson.version>3.2.9</easyjson.version>
         <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
         <scm.url>${scm.url0}.git</scm.url>
     </properties>
