@@ -16,6 +16,12 @@
         <dependency>
             <groupId>com.github.fangjinuo.esmvc</groupId>
             <artifactId>esmvc-spring-boot-starter-rest</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.fangjinuo.esmvc</groupId>

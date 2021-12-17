@@ -18,16 +18,20 @@
     <properties>
         <spring.version>5.2.6.RELEASE</spring.version>
         <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.32</slf4j.version>
         <!--
         <elasticsearch.version>7.5.2</elasticsearch.version>
-        -->
         <elasticsearch.version>6.7.0</elasticsearch.version>
+        -->
+        <elasticsearch.version>6.8.8</elasticsearch.version>
         <searchguard.version>6.7.0-25.6</searchguard.version>
-        <langx.version>4.0.2</langx.version>
+        <langx.version>4.2.1</langx.version>
         <easyjson.version>3.2.9</easyjson.version>
+        <log4j2.version>2.16.0</log4j2.version>
+
         <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
         <scm.url>${scm.url0}.git</scm.url>
+
     </properties>
 
     <url>${scm.url0}</url>
@@ -77,6 +81,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-autoconfigure</artifactId>
@@ -164,6 +178,12 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticsearch.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging-api</artifactId>
+                    </exclusion>
+                </exclusions>
                 <optional>true</optional>
             </dependency>
             <dependency>
@@ -189,8 +209,22 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
         </dependency>
     </dependencies>
 

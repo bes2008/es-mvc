@@ -15,6 +15,12 @@
         <dependency>
             <groupId>com.github.fangjinuo.esmvc</groupId>
             <artifactId>esmvc-service</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
