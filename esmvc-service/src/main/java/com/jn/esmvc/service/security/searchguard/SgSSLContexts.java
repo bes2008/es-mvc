@@ -1,7 +1,7 @@
 package com.jn.esmvc.service.security.searchguard;
 
 import com.jn.esmvc.service.security.PemReader;
-import com.jn.langx.security.PKIs;
+import com.jn.langx.security.crypto.key.PKIs;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;

@@ -1,6 +1,6 @@
 package com.jn.esmvc.service.request.document.action.count;
 
-import com.jn.langx.util.Objects;
+import com.jn.langx.util.Objs;
 import com.jn.langx.util.hash.HashCodeBuilder;
 import org.elasticsearch.action.ActionRequest;
 import org.elasticsearch.action.ActionRequestValidationException;
@@ -49,9 +49,9 @@ public class CountRequest extends ActionRequest {
      * Sets the indices the count will be executed on.
      */
     public CountRequest indices(String... indices) {
-        Objects.requireNonNull(indices, "indices must not be null");
+        Objs.requireNonNull(indices, "indices must not be null");
         for (String index : indices) {
-            Objects.requireNonNull(index, "index must not be null");
+            Objs.requireNonNull(index, "index must not be null");
         }
         this.indices = indices;
         return this;
@@ -61,7 +61,7 @@ public class CountRequest extends ActionRequest {
      * The source of the count request.
      */
     public CountRequest source(SearchSourceBuilder searchSourceBuilder) {
-        this.searchSourceBuilder = Objects.requireNonNull(searchSourceBuilder, "source must not be null");
+        this.searchSourceBuilder = Objs.requireNonNull(searchSourceBuilder, "source must not be null");
         return this;
     }
 
@@ -72,9 +72,9 @@ public class CountRequest extends ActionRequest {
      */
     @Deprecated
     public CountRequest types(String... types) {
-        Objects.requireNonNull(types, "types must not be null");
+        Objs.requireNonNull(types, "types must not be null");
         for (String type : types) {
-            Objects.requireNonNull(type, "type must not be null");
+            Objs.requireNonNull(type, "type must not be null");
         }
         this.types = types;
         return this;
@@ -103,7 +103,7 @@ public class CountRequest extends ActionRequest {
      * @see org.elasticsearch.action.support.IndicesOptions
      */
     public CountRequest indicesOptions(IndicesOptions indicesOptions) {
-        this.indicesOptions = Objects.requireNonNull(indicesOptions, "indicesOptions must not be null");
+        this.indicesOptions = Objs.requireNonNull(indicesOptions, "indicesOptions must not be null");
         return this;
     }
 
@@ -176,12 +176,12 @@ public class CountRequest extends ActionRequest {
             return false;
         }
         CountRequest that = (CountRequest) o;
-        return Objects.equals(indicesOptions, that.indicesOptions) &&
+        return Objs.equals(indicesOptions, that.indicesOptions) &&
                 Arrays.equals(indices, that.indices) &&
                 Arrays.equals(types, that.types) &&
-                Objects.equals(routing, that.routing) &&
-                Objects.equals(preference, that.preference) &&
-                Objects.equals(countColumn, that.countColumn)
+                Objs.equals(routing, that.routing) &&
+                Objs.equals(preference, that.preference) &&
+                Objs.equals(countColumn, that.countColumn)
                 ;
     }
 

@@ -25,9 +25,9 @@
         -->
         <elasticsearch.version>6.8.8</elasticsearch.version>
         <searchguard.version>6.7.0-25.6</searchguard.version>
-        <langx.version>4.2.1</langx.version>
+        <langx.version>4.2.2</langx.version>
         <easyjson.version>3.2.9</easyjson.version>
-        <log4j2.version>2.16.0</log4j2.version>
+        <log4j2.version>2.17.0</log4j2.version>
 
         <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
         <scm.url>${scm.url0}.git</scm.url>
@@ -102,7 +102,11 @@
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
