@@ -7,7 +7,7 @@
     <groupId>com.github.fangjinuo.esmvc</groupId>
     <artifactId>esmvc</artifactId>
     <packaging>pom</packaging>
-    <version>1.3.2</version>
+    <version>1.3.4</version>
 
     <name>${groupId}:${artifactId}:${version}</name>
 

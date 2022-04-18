@@ -3,6 +3,7 @@ package com.jn.esmvc.service.util;
 import com.jn.easyjson.core.JSON;
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.service.ClientWrapper;
+import com.jn.langx.util.Emptys;
 import com.jn.langx.util.Preconditions;
 import com.jn.langx.util.pagination.PagingRequest;
 import com.jn.langx.util.reflect.Reflects;
@@ -19,6 +20,7 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,8 +90,11 @@ public class ESRequests {
         return null;
     }
 
+    private static final Method searchHits_getTotalHits = Reflects.getDeclaredMethod(SearchHits.class, "getTotalHits");
+
     public static long getSearchTotalHits(SearchHits searchHits) {
-        Object obj = searchHits.getTotalHits();
+        // es 6.x , 7.x SearchHits#getTotalHits() 返回值发生变化
+        Object obj = Reflects.invoke(searchHits_getTotalHits, searchHits, Emptys.EMPTY_OBJECTS, true, true);
         if (obj == null) {
             return searchHits.getHits().length;
         }
