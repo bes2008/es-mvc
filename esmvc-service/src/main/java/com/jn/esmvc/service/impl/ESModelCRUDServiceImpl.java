@@ -38,7 +38,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public String add(MODEL model) throws IOException {
         Preconditions.checkNotNull(model);
         String index = ESModels.getIndex(model.getClass());
-        String type = ESModels.getType(model.getClass());
+        String type = getClient().isIgnoreIndexType() ? null : ESModels.getType(model.getClass());
         String id = ESModels.getId(model);
         IndexRequest request = new IndexRequest(index, type, id);
         request.source(json.toJson(model), XContentType.JSON);
@@ -61,14 +61,16 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public MODEL getById(String id) throws IOException {
         Preconditions.checkNotNull(id);
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
+
         GetRequest request = new GetRequest()
                 .index(index)
-                .type(type)
                 .id(id);
-
+        if (!getClient().isIgnoreIndexType()) {
+            String type = ESModels.getType(modelClass);
+            request.type(type);
+        }
         try {
-            GetResponse response = client.get(request, null);
+            GetResponse response = getClient().get(request, null);
             if (response.isExists() && !response.isSourceEmpty()) {
                 return asModel(response, json, modelClass);
             }
@@ -84,11 +86,14 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public boolean removeById(String id) throws IOException {
         Preconditions.checkNotNull(id);
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
+
         DeleteRequest request = new DeleteRequest()
                 .index(index)
-                .type(type)
                 .id(id);
+        if (!getClient().isIgnoreIndexType()) {
+            String type = ESModels.getType(modelClass);
+            request.type(type);
+        }
         DeleteResponse response;
         try {
             response = client.delete(request, null);
@@ -110,14 +115,16 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public boolean updateById(String id, MODEL model) throws IOException {
         Preconditions.checkNotNull(model);
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
         UpdateRequest request = new UpdateRequest()
                 .index(index)
-                .type(type)
                 .id(id)
                 .doc(json.toJson(model), XContentType.JSON)
                 .fetchSource(false);
 
+        if (!getClient().isIgnoreIndexType()) {
+            String type = ESModels.getType(modelClass);
+            request.type(type);
+        }
         UpdateResponse response;
         try {
             response = client.update(request, null);
@@ -140,14 +147,15 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public MODEL replaceById(String id, MODEL model) throws IOException {
         Preconditions.checkNotNull(model);
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
         UpdateRequest request = new UpdateRequest()
                 .index(index)
-                .type(type)
                 .id(id)
                 .doc(json.toJson(model), XContentType.JSON)
                 .fetchSource(true);
-
+        if (!getClient().isIgnoreIndexType()) {
+            String type = ESModels.getType(modelClass);
+            request.type(type);
+        }
         UpdateResponse response;
         try {
             response = client.update(request, null);
@@ -169,17 +177,18 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public MODEL merge(MODEL model) throws IOException {
         Preconditions.checkNotNull(model);
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
         String id = ESModels.getId(model);
         UpdateRequest request = new UpdateRequest()
                 .index(index)
-                .type(type)
                 .id(id)
                 .doc(json.toJson(model), XContentType.JSON)
                 .docAsUpsert(true)
                 .fetchSource(true)
                 .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-
+        if (!getClient().isIgnoreIndexType()) {
+            String type = ESModels.getType(modelClass);
+            request.type(type);
+        }
         try {
             UpdateResponse response = client.update(request, null);
             if (response.getGetResult().isExists() && !response.getGetResult().isSourceEmpty()) {
@@ -196,12 +205,16 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public List<MODEL> getByIds(List<String> ids) throws IOException {
         Preconditions.checkNotNull(ids);
         final String index = ESModels.getIndex(modelClass);
-        final String type = ESModels.getType(modelClass);
+        final String type = getClient().isIgnoreIndexType() ? null: ESModels.getType(modelClass);
         final MultiGetRequest request = new MultiGetRequest();
         Collects.forEach(ids, new Consumer<String>() {
             @Override
             public void accept(String id) {
-                request.add(index, type, id);
+                if (type == null) {
+                    request.add(index, id);
+                } else {
+                    request.add(index, type, id);
+                }
             }
         });
 
@@ -237,15 +250,17 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
             @Override
             public void accept(MODEL model) {
                 String index = ESModels.getIndex(model.getClass());
-                String type = ESModels.getType(model.getClass());
                 String id = ESModels.getId(model);
                 UpdateRequest mergeRequest = new UpdateRequest();
                 mergeRequest.index(index)
-                        .type(type)
                         .id(id)
                         .doc(json.toJson(model), XContentType.JSON)
                         .docAsUpsert(true)
                         .fetchSource(false);
+                if (!getClient().isIgnoreIndexType()) {
+                    String type = ESModels.getType(modelClass);
+                    mergeRequest.type(type);
+                }
                 request.add(mergeRequest);
             }
         });

@@ -55,17 +55,17 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
     @Override
     public long count(String countColumn, SearchSourceBuilder bodyBuilder) throws IOException {
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
 
         CountRequest request = new CountRequest();
         request.indices(index);
-        if (!getClient().isServerVersionGE7()) {
+        if (!getClient().isIgnoreIndexType()) {
+            String type = ESModels.getType(modelClass);
             request.types(type);
         }
         request.source(bodyBuilder);
         request.countColumn(countColumn);
         try {
-            CountResponse response = client.count(request, null);
+            CountResponse response = getClient().count(request, null);
             return response.getCount();
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);
@@ -202,23 +202,28 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
 
         if (useFromSizePagation) {
             String index = ESModels.getIndex(modelClass);
-            String type = ESModels.getType(modelClass);
+
             SearchRequest request = new SearchRequest()
                     .indices(index)
-                    .types(type)
                     .searchType(SearchType.QUERY_THEN_FETCH);
+            if (!getClient().isIgnoreIndexType()) {
+                String type = ESModels.getType(modelClass);
+                request.types(type);
+            }
             request.source(searchBodyBuilder);
             SearchResponse response = client.search(request, null);
             return extractSearchResults(response);
         } else {
             String index = ESModels.getIndex(modelClass);
-            String type = ESModels.getType(modelClass);
             if (scrollContext == null) {
                 // first search
                 SearchRequest request = new SearchRequest()
                         .indices(index)
-                        .types(type)
                         .searchType(SearchType.QUERY_THEN_FETCH);
+                if (!getClient().isIgnoreIndexType()) {
+                    String type = ESModels.getType(modelClass);
+                    request.types(type);
+                }
                 scrollContext = new ScrollContext<>();
                 scrollContext.setScroll(new Scroll(TimeValue.timeValueMillis(scrollDuration)));
                 request.source(searchBodyBuilder);
@@ -260,10 +265,13 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
     public List<MODEL> union(SearchSourceBuilder... bodyBuilders) throws IOException {
         MultiSearchRequest request = new MultiSearchRequest();
         String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
+        String type = getClient().isIgnoreIndexType() ? null : ESModels.getType(modelClass);
         for (SearchSourceBuilder bodyBuilder : bodyBuilders) {
             SearchRequest r = new SearchRequest();
             r.indices(index).types(type);
+            if (!getClient().isIgnoreIndexType()) {
+                r.types(type);
+            }
             r.source(bodyBuilder);
             request.add(r);
         }

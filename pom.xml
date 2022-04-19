@@ -20,10 +20,11 @@
         <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
         <slf4j.version>1.7.32</slf4j.version>
         <!--
-        <elasticsearch.version>7.5.2</elasticsearch.version>
+
         <elasticsearch.version>6.7.0</elasticsearch.version>
-        -->
         <elasticsearch.version>6.8.8</elasticsearch.version>
+        -->
+        <elasticsearch.version>7.5.2</elasticsearch.version>
         <searchguard.version>6.7.0-25.6</searchguard.version>
         <langx.version>4.2.2</langx.version>
         <easyjson.version>3.2.9</easyjson.version>

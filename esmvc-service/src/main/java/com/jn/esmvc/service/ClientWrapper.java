@@ -46,6 +46,7 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
      * @return
      */
     private boolean serverVersionGE7 = false;
+    private boolean clientVersionGE7 = false;
     /**
      * 服务端版本是否大于等于7
      * @return
@@ -56,6 +57,18 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
     public void setServerVersionGE7(boolean serverVersionGE7) {
         this.serverVersionGE7 = serverVersionGE7;
+    }
+
+    public boolean isClientVersionGE7() {
+        return clientVersionGE7;
+    }
+
+    public void setClientVersionGE7(boolean clientVersionGE7) {
+        this.clientVersionGE7 = clientVersionGE7;
+    }
+
+    public boolean isIgnoreIndexType(){
+        return this.clientVersionGE7 && this.serverVersionGE7;
     }
 
     /**

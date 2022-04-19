@@ -57,19 +57,19 @@ public class Versions {
             List<String> versions = getServerVersions(client);
             if (Objs.length(versions) == 1) {
                 String version = versions.get(0);
-                client.setServerVersionGE7(checkServerVersionGE7(version));
+                client.setServerVersionGE7(checkVersionGE7(Version.fromString(version)));
                 return true;
             }
-        }catch (Throwable ex){
-            client.setServerVersionGE7(checkServerVersionGE7(Version.CURRENT.toString()));
+        } catch (Throwable ex) {
+            client.setServerVersionGE7(checkVersionGE7(Version.CURRENT));
         }
+        client.setClientVersionGE7(checkVersionGE7(Version.CURRENT));
         return false;
     }
 
-    private static final Version VERSION_7_0_0 = Version.fromString("7.0.0");// Version.fromString("");
+    private static final Version VERSION_7_0_0 = Version.fromString("7.0.0");
 
-    public static boolean checkServerVersionGE7(String version) {
-        Version v = Version.fromString(version);
-        return v.compareTo(VERSION_7_0_0) >=0;
+    private static boolean checkVersionGE7(Version version) {
+        return version.compareTo(VERSION_7_0_0) >= 0;
     }
 }

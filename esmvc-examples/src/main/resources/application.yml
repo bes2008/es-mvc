@@ -16,23 +16,23 @@ esmvc:
       username: admin
       password: admin
   tcp:
-    enabled: false
+    enabled: true
     primary:
       name: testTcp
       #nodes: 192.168.1.70:9300
       nodes: 192.168.221.128:9300
       plugins:
-        - com.floragunn.searchguard.ssl.SearchGuardSSLPlugin
+      #  - com.floragunn.searchguard.ssl.SearchGuardSSLPlugin
       props:
         "[client.transport.sniff]": true # 是否启用sniff方案获取可用集群nodes
         "[client.transport.nodes_sampler_interval]": 60s
         "[client.transport.ignore_cluster_name]": false
         "[cluster.name]": my-application # 当集群名称不忽略时，该名称必须是存在的集群名称
-        "[searchguard.ssl.transport.pemkey_filepath]": ${esmvc.rest.primary.search-guard-ssl.pem-key-filepath} #classpath:ssl/searchguard/common client.key
-        "[searchguard.ssl.transport.pemcert_filepath]": ${esmvc.rest.primary.search-guard-ssl.pem-cert-filepath} #classpath:ssl/searchguard/common client.pem
-        "[searchguard.ssl.transport.pemtrustedcas_filepath]": ${esmvc.rest.primary.search-guard-ssl.pem-trusted-cas-filepath} #classpath:ssl/searchguard/root-ca.pem
-        "[searchguard.ssl.transport.pemkey_password]": ${esmvc.rest.primary.search-guard-ssl.pem-key-password} #LmqZy28M3lHBfcJuD9tL
-        "[searchguard.ssl.transport.enforce_hostname_verification]": false
+      #  "[searchguard.ssl.transport.pemkey_filepath]": ${esmvc.rest.primary.search-guard-ssl.pem-key-filepath} #classpath:ssl/searchguard/common client.key
+      #  "[searchguard.ssl.transport.pemcert_filepath]": ${esmvc.rest.primary.search-guard-ssl.pem-cert-filepath} #classpath:ssl/searchguard/common client.pem
+      #  "[searchguard.ssl.transport.pemtrustedcas_filepath]": ${esmvc.rest.primary.search-guard-ssl.pem-trusted-cas-filepath} #classpath:ssl/searchguard/root-ca.pem
+      #  "[searchguard.ssl.transport.pemkey_password]": ${esmvc.rest.primary.search-guard-ssl.pem-key-password} #LmqZy28M3lHBfcJuD9tL
+      #  "[searchguard.ssl.transport.enforce_hostname_verification]": false
 swagger:
   base-package: com.jn.esmvc.examples
 
