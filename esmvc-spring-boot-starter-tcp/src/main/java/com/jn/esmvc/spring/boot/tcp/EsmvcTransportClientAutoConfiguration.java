@@ -46,8 +46,8 @@ public class EsmvcTransportClientAutoConfiguration {
 
     @Bean
     public TcpClientWrapper tcpClientWrapper(TransportClient transportClient){
-        TcpClientWrapper wrapper = TcpClientWrapper.fromTransportClient(transportClient);
-        Versions.checkVersion(wrapper);
-        return wrapper;
+        TcpClientWrapper client = TcpClientWrapper.fromTransportClient(transportClient);
+        Versions.checkVersion(client);
+        return client;
     }
 }

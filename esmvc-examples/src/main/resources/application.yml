@@ -4,7 +4,8 @@ esmvc:
   rest:
     primary:
       name: testRest
-      nodes: 192.168.1.70:9200
+      #nodes: 192.168.1.70:9200
+      nodes: 192.168.221.128:9200
       protocol: http
       search-guard-ssl:
         enabled: false
@@ -15,10 +16,11 @@ esmvc:
       username: admin
       password: admin
   tcp:
-    enabled: true
+    enabled: false
     primary:
       name: testTcp
-      nodes: 192.168.1.70:9300
+      #nodes: 192.168.1.70:9300
+      nodes: 192.168.221.128:9300
       plugins:
         - com.floragunn.searchguard.ssl.SearchGuardSSLPlugin
       props:

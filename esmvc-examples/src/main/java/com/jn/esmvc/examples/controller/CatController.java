@@ -6,6 +6,7 @@ import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.rest.request.cat.RestCatClientWrapper;
 import com.jn.esmvc.service.tcp.TcpClientWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,10 +31,13 @@ public class CatController {
         return clientWrapper.nodeattrs(null, null);
     }
 
+    /*
     @Autowired
     public void setTcpClientWrapper(TcpClientWrapper tcpClientWrapper) {
         this.tcpClientWrapper = tcpClientWrapper;
     }
+
+     */
 
     @Autowired
     public void setRestClientWrapper(RestClientWrapper restClientWrapper) {

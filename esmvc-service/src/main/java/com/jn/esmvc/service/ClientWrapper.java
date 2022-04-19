@@ -41,6 +41,22 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
     public abstract <WRAPPER> CatClientWrapper<WRAPPER, OPTIONS> cat();
 
+    /**
+     * 服务端版本是否大于等于7
+     * @return
+     */
+    private boolean serverVersionGE7 = false;
+    /**
+     * 服务端版本是否大于等于7
+     * @return
+     */
+    public boolean isServerVersionGE7(){
+        return this.serverVersionGE7;
+    }
+
+    public void setServerVersionGE7(boolean serverVersionGE7) {
+        this.serverVersionGE7 = serverVersionGE7;
+    }
 
     /**
      * 同步 index

@@ -23,7 +23,6 @@ public class DefaultRestClientBuilderCustomizer implements RestClientBuilderCust
 
     @Override
     public void customize(RestClientBuilder builder) {
-
     }
 
     @Override
