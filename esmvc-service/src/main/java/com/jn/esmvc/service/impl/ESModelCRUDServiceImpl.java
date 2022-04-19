@@ -210,11 +210,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
         Collects.forEach(ids, new Consumer<String>() {
             @Override
             public void accept(String id) {
-                if (type == null) {
-                    request.add(index, id);
-                } else {
-                    request.add(index, type, id);
-                }
+                request.add(index, type, id);
             }
         });
 
