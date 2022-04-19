@@ -58,7 +58,10 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         String type = ESModels.getType(modelClass);
 
         CountRequest request = new CountRequest();
-        request.indices(index).types(type);
+        request.indices(index);
+        if (!getClient().isServerVersionGE7()) {
+            request.types(type);
+        }
         request.source(bodyBuilder);
         request.countColumn(countColumn);
         try {
