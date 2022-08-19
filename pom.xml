@@ -27,8 +27,8 @@
 
         <elasticsearch.version>6.8.8</elasticsearch.version>
         <searchguard.version>6.7.0-25.6</searchguard.version>
-        <langx.version>4.5.1</langx.version>
-        <easyjson.version>3.2.15</easyjson.version>
+        <langx.version>4.7.4</langx.version>
+        <easyjson.version>3.2.21</easyjson.version>
         <log4j2.version>2.17.0</log4j2.version>
 
         <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
